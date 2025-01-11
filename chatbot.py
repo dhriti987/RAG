@@ -13,8 +13,10 @@ from decouple import config
 
 @st.cache_resource()
 def load_embedding_model():
+    # bge_embeddings = GoogleGenerativeAIEmbeddings(
+    #     model="models/embedding-001", google_api_key=config('GOOGLE_API_KEY'))
     bge_embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/embedding-001", google_api_key=config('GOOGLE_API_KEY'))
+        model="models/embedding-001", google_api_key=st.secrets['GOOGLE_API_KEY'])
     return bge_embeddings
 
 
@@ -22,7 +24,7 @@ def load_embedding_model():
 def load_llm_model():
     model = "gemini-pro"
     # Define a prompt template instructing the assistant on how to answer investor questions
-    model = ChatGoogleGenerativeAI(model=model, google_api_key=config('GOOGLE_API_KEY'),
+    model = ChatGoogleGenerativeAI(model=model, google_api_key=st.secrets['GOOGLE_API_KEY'],
                                    temperature=0.7)
 
     template = """You are a Chatbot that can answer questions from users based on the Context provided. Ensure the responses are accurate and utilize retrieval from the knowledge base.
